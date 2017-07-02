@@ -22,7 +22,7 @@ import {
 const SearchMiddleware = ({dispatch}) => next => action => {
   const receiveUserSuccess = (data) => dispatch(receiveUser(data));
   const receiveOrgSuccess = (data) => dispatch(receiveOrganization(data));
-  const receiveUserReposSuccess = (data) = dispatch(receiveUserRepos(data));
+  const receiveUserReposSuccess = (data) => dispatch(receiveUserRepos(data));
   const error = (data) => console.log(data);
 
   switch (action.type) {

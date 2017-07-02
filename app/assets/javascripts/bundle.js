@@ -13265,7 +13265,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // debugging purposes
   window.store = store;
-  window.requestUserRepos = _search_actions.requestUserRepos;
+  window.requestUser = _search_actions.requestUser;
   // window.success = (data) => console.log(data);
   // window.error = data => console.log(data);
   // window.getUserRepos = getUserRepos;
@@ -31387,7 +31387,9 @@ var SearchMiddleware = function SearchMiddleware(_ref) {
       var receiveOrgSuccess = function receiveOrgSuccess(data) {
         return dispatch((0, _search_actions.receiveOrganization)(data));
       };
-      var receiveUserReposSuccess = data = dispatch((0, _search_actions.receiveUserRepos)(data));
+      var receiveUserReposSuccess = function receiveUserReposSuccess(data) {
+        return dispatch((0, _search_actions.receiveUserRepos)(data));
+      };
       var error = function error(data) {
         return console.log(data);
       };
@@ -31442,16 +31444,61 @@ var User = function (_React$Component) {
   function User(props) {
     _classCallCheck(this, User);
 
-    return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, props));
+
+    _this.user = _this.user.bind(_this);
+    return _this;
   }
 
   _createClass(User, [{
+    key: 'user',
+    value: function user() {
+      if (this.props.user.username != "") {
+        return _react2.default.createElement(
+          'div',
+          { className: 'user-info' },
+          'USER INFO:',
+          _react2.default.createElement(
+            'p',
+            null,
+            'Name: ',
+            this.props.user.name
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Username: ',
+            this.props.user.username
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Joined: ',
+            this.props.user.created_at
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Followers: ',
+            this.props.user.followers
+          ),
+          _react2.default.createElement(
+            'a',
+            { href: 'http://github.com/' + this.props.user.username },
+            'Github'
+          )
+        );
+      } else {
+        return _react2.default.createElement('div', null);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
-        'USER'
+        { className: 'container-item' },
+        this.user()
       );
     }
   }]);

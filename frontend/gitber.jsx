@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/store'
 import Root from './components/root'
-import {requestUserRepos} from './actions/search_actions';
+import {requestUser} from './actions/search_actions';
 
 document.addEventListener('DOMContentLoaded', () => {
   const rootEl = document.getElementById('root');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // debugging purposes
   window.store = store;
-  window.requestUserRepos = requestUserRepos;
+  window.requestUser = requestUser;
   // window.success = (data) => console.log(data);
   // window.error = data => console.log(data);
   // window.getUserRepos = getUserRepos;
