@@ -12298,6 +12298,8 @@ var _root = __webpack_require__(108);
 
 var _root2 = _interopRequireDefault(_root);
 
+var _github_api_util = __webpack_require__(362);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -12311,8 +12313,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // debugging purposes
   // window.store = store;
-  // window.success = (data) => console.log(data);
-  // window.error = data => console.log(data);
+  window.success = function (data) {
+    return console.log(data);
+  };
+  window.error = function (data) {
+    return console.log(data);
+  };
+  window.searchUser = _github_api_util.searchUser;
   // window.ask = ask;
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), rootEl);
 });
@@ -28836,8 +28843,6 @@ var ResultReducer = function ResultReducer() {
       return newState;
     case _search_actions.RECEIVE_USER:
       newState.user = action.user;
-    case LOGOUT:
-      return _defaultState;
     default:
       return oldState;
   }
@@ -30998,6 +31003,34 @@ function toPlainObject(value) {
 
 module.exports = toPlainObject;
 
+
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var searchUser = exports.searchUser = function searchUser(user, success, error) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.github.com/users/" + user,
+    success: success,
+    error: error
+  });
+};
+
+var searchOrganization = exports.searchOrganization = function searchOrganization(organization, success, error) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.github.com/users/" + user,
+    success: success,
+    error: error
+  });
+};
 
 /***/ })
 /******/ ]);

@@ -16,8 +16,6 @@ const ResultReducer = (oldState = _defaultState, action) => {
       return newState
     case RECEIVE_USER:
       newState.user = action.user
-    case LOGOUT:
-      return _defaultState;
     default:
       return oldState;
   }

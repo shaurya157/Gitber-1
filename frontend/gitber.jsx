@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/store'
 import Root from './components/root'
+import {searchUser} from './util/github_api_util';
 
 document.addEventListener('DOMContentLoaded', () => {
   const rootEl = document.getElementById('root');
@@ -14,8 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // debugging purposes
   // window.store = store;
-  // window.success = (data) => console.log(data);
-  // window.error = data => console.log(data);
+  window.success = (data) => console.log(data);
+  window.error = data => console.log(data);
+  window.searchUser = searchUser;
   // window.ask = ask;
   ReactDOM.render(<Root store={store} />, rootEl);
 });
