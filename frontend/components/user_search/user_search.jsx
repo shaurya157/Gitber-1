@@ -7,7 +7,7 @@ class UserSearch extends React.Component{
 
     render(){
       return(
-        <div>
+        <div className='row-fluid'>
           User search
         </div>
       )

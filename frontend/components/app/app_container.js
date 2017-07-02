@@ -1,15 +1,19 @@
 import {connect} from 'react-redux';
 import App from './app'
+import { requestUser,
+        requestOrganization,
+        requestUserRepos} from '../../actions/search_actions';
 
-const mapStateToProps = (state) => ({
-  user: state.searchResult.user,
-  organization: state.searchResult.organization,
-  repos: state.searchResult.repos
+const mapStateToProps = ({searchResult}) => ({
+  user: searchResult.user,
+  organization: searchResult.organization,
+  repos: searchResult.repos
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  requestUser = (user) => requestUser(user),
-  requestOrganization = (org) => requestOrganization(org),
+  requestUser: (user) => dispatch(requestUser(user)),
+  requestOrganization: (org) => dispatch(requestOrganization(org)),
+  requestUserRepos: (user) => dispatch(requestUserRepos(user))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlaylistIndex);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

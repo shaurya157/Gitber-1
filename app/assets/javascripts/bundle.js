@@ -13042,9 +13042,9 @@ var _reactRedux = __webpack_require__(320);
 
 var _reactRouterDom = __webpack_require__(333);
 
-var _app = __webpack_require__(363);
+var _app_container = __webpack_require__(369);
 
-var _app2 = _interopRequireDefault(_app);
+var _app_container2 = _interopRequireDefault(_app_container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13057,7 +13057,7 @@ var Root = function Root(_ref) {
     _react2.default.createElement(
       _reactRouterDom.HashRouter,
       null,
-      _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _app2.default })
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _app_container2.default })
     )
   );
 };
@@ -31143,6 +31143,10 @@ var _repository = __webpack_require__(366);
 
 var _repository2 = _interopRequireDefault(_repository);
 
+var _user = __webpack_require__(368);
+
+var _user2 = _interopRequireDefault(_user);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31163,12 +31167,99 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
+      var divStyle1 = {
+        position: 'fixed',
+        textAlign: 'center'
+      };
+
+      var divStyle2 = {
+        textAlight: 'center'
+      };
       return _react2.default.createElement(
         'div',
         { className: 'app-container' },
-        _react2.default.createElement(_user_search2.default, null),
-        _react2.default.createElement(_organization_search2.default, null),
-        _react2.default.createElement(_repository2.default, null)
+        _react2.default.createElement(
+          'div',
+          { className: 'gitber container', id: 'tagHeading',
+            style: divStyle1,
+            'data-0': 'margin-top:-50px;',
+            'data-anchor-target': '#fitHeader',
+            'data-50-top-bottom': 'margin-top:-50px;',
+            'data--250-top-bottom': 'margin-top:0px;' },
+          _react2.default.createElement(
+            'p',
+            null,
+            'GitBer!'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'container' },
+          _react2.default.createElement(
+            'div',
+            { className: 'row-fluid', style: divStyle2 },
+            _react2.default.createElement(
+              'p',
+              { className: 'gitber', id: 'fitHeader' },
+              _react2.default.createElement(
+                'span',
+                { id: 'gitber1' },
+                'G'
+              ),
+              _react2.default.createElement(
+                'span',
+                { id: 'gitber2' },
+                'i'
+              ),
+              _react2.default.createElement(
+                'span',
+                { id: 'gitber3' },
+                't'
+              ),
+              _react2.default.createElement(
+                'span',
+                { id: 'gitber4' },
+                'B'
+              ),
+              _react2.default.createElement(
+                'span',
+                { id: 'gitber5' },
+                'e'
+              ),
+              _react2.default.createElement(
+                'span',
+                { id: 'gitber6' },
+                'r'
+              ),
+              _react2.default.createElement(
+                'span',
+                { id: 'gitber7' },
+                '!'
+              ),
+              _react2.default.createElement(
+                'span',
+                { id: 'gitber8' },
+                _react2.default.createElement('i', { className: 'icon-github' })
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'row-fluid' },
+            _react2.default.createElement(
+              'div',
+              { className: 'span4' },
+              _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(_user_search2.default, null),
+                _react2.default.createElement(_organization_search2.default, null),
+                _react2.default.createElement(_repository2.default, null),
+                _react2.default.createElement(_user2.default, { user: this.props.user })
+              )
+            )
+          )
+        )
       );
     }
   }]);
@@ -31217,7 +31308,7 @@ var OrganizationSearch = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'row-fluid' },
         'Org search'
       );
     }
@@ -31267,7 +31358,7 @@ var UserSearch = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'row-fluid' },
         'User search'
       );
     }
@@ -31317,7 +31408,7 @@ var Repository = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'row-fluid' },
         'represult'
       );
     }
@@ -31378,6 +31469,106 @@ var SearchMiddleware = function SearchMiddleware(_ref) {
 };
 
 exports.default = SearchMiddleware;
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var User = function (_React$Component) {
+  _inherits(User, _React$Component);
+
+  function User(props) {
+    _classCallCheck(this, User);
+
+    return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, props));
+  }
+
+  _createClass(User, [{
+    key: 'render',
+    value: function render() {
+      var divStyleUser = {
+        position: 'relative'
+      };
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'row-fluid', style: divStyleUser },
+        'USER'
+      );
+    }
+  }]);
+
+  return User;
+}(_react2.default.Component);
+
+exports.default = User;
+
+/***/ }),
+/* 369 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(320);
+
+var _app = __webpack_require__(363);
+
+var _app2 = _interopRequireDefault(_app);
+
+var _search_actions = __webpack_require__(141);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var searchResult = _ref.searchResult;
+  return {
+    user: searchResult.user,
+    organization: searchResult.organization,
+    repos: searchResult.repos
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    requestUser: function requestUser(user) {
+      return dispatch((0, _search_actions.requestUser)(user));
+    },
+    requestOrganization: function requestOrganization(org) {
+      return dispatch((0, _search_actions.requestOrganization)(org));
+    },
+    requestUserRepos: function requestUserRepos(user) {
+      return dispatch((0, _search_actions.requestUserRepos)(user));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_app2.default);
 
 /***/ })
 /******/ ]);
