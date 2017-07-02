@@ -24,9 +24,21 @@ a{
 .user-info {
   background-color: white;
   width: 250px;
-  padding: 10px
+  padding: 10px;
 }
 
 .container-item {
     margin: 20px;
+}
+
+li, a {
+  cursor: pointer;
+}
+
+.org-info{
+  height: 250px;
+  overflow: scroll;
+  padding:20px;
+  background-color: white;
+  width: 150px; 
 }

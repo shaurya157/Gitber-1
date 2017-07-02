@@ -31147,6 +31147,10 @@ var _user = __webpack_require__(368);
 
 var _user2 = _interopRequireDefault(_user);
 
+var _org = __webpack_require__(370);
+
+var _org2 = _interopRequireDefault(_org);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31171,9 +31175,11 @@ var App = function (_React$Component) {
         'div',
         { className: 'app-container' },
         _react2.default.createElement(_user_search2.default, { requestUser: this.props.requestUser }),
-        _react2.default.createElement(_organization_search2.default, null),
+        _react2.default.createElement(_organization_search2.default, { requestOrganization: this.props.requestOrganization }),
         _react2.default.createElement(_repository2.default, null),
-        _react2.default.createElement(_user2.default, { user: this.props.user })
+        _react2.default.createElement(_user2.default, { user: this.props.user }),
+        _react2.default.createElement(_org2.default, { org: this.props.organization,
+          requestUser: this.props.requestUser })
       );
     }
   }]);
@@ -31214,16 +31220,45 @@ var OrganizationSearch = function (_React$Component) {
   function OrganizationSearch(props) {
     _classCallCheck(this, OrganizationSearch);
 
-    return _possibleConstructorReturn(this, (OrganizationSearch.__proto__ || Object.getPrototypeOf(OrganizationSearch)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (OrganizationSearch.__proto__ || Object.getPrototypeOf(OrganizationSearch)).call(this, props));
+
+    _this.state = {
+      organization: ""
+    };
+
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
   _createClass(OrganizationSearch, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ organization: e.target.value });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      this.props.requestOrganization(this.state.organization);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
-        'Org search'
+        { className: 'container-item org-search' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement('input', { type: 'text',
+            placeholder: 'Enter Organization Name',
+            onChange: this.handleChange }),
+          _react2.default.createElement(
+            'button',
+            null,
+            'Submit'
+          )
+        )
       );
     }
   }]);
@@ -31553,6 +31588,87 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_app2.default);
+
+/***/ }),
+/* 370 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Org = function (_React$Component) {
+  _inherits(Org, _React$Component);
+
+  function Org(props) {
+    _classCallCheck(this, Org);
+
+    var _this = _possibleConstructorReturn(this, (Org.__proto__ || Object.getPrototypeOf(Org)).call(this, props));
+
+    _this.org = _this.org.bind(_this);
+    _this.handleClick = _this.handleClick.bind(_this);
+    _this.requestUser = _this.props.requestUser.bind(_this);
+    return _this;
+  }
+
+  _createClass(Org, [{
+    key: 'handleClick',
+    value: function handleClick(e) {
+      this.requestUser(e.currentTarget.innerText);
+    }
+  }, {
+    key: 'org',
+    value: function org() {
+      var _this2 = this;
+
+      if (this.props.org.length != 0) {
+        return _react2.default.createElement(
+          'ul',
+          { className: 'org-info' },
+          this.props.org.map(function (member, idx) {
+            return _react2.default.createElement(
+              'li',
+              { key: idx, onClick: _this2.handleClick },
+              member.username
+            );
+          })
+        );
+      } else {
+        return _react2.default.createElement('div', null);
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'container-item' },
+        this.org()
+      );
+    }
+  }]);
+
+  return Org;
+}(_react2.default.Component);
+
+exports.default = Org;
 
 /***/ })
 /******/ ]);
