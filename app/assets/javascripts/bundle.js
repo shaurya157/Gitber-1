@@ -31167,99 +31167,13 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      var divStyle1 = {
-        position: 'fixed',
-        textAlign: 'center'
-      };
-
-      var divStyle2 = {
-        textAlight: 'center'
-      };
       return _react2.default.createElement(
         'div',
         { className: 'app-container' },
-        _react2.default.createElement(
-          'div',
-          { className: 'gitber container', id: 'tagHeading',
-            style: divStyle1,
-            'data-0': 'margin-top:-50px;',
-            'data-anchor-target': '#fitHeader',
-            'data-50-top-bottom': 'margin-top:-50px;',
-            'data--250-top-bottom': 'margin-top:0px;' },
-          _react2.default.createElement(
-            'p',
-            null,
-            'GitBer!'
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'container' },
-          _react2.default.createElement(
-            'div',
-            { className: 'row-fluid', style: divStyle2 },
-            _react2.default.createElement(
-              'p',
-              { className: 'gitber', id: 'fitHeader' },
-              _react2.default.createElement(
-                'span',
-                { id: 'gitber1' },
-                'G'
-              ),
-              _react2.default.createElement(
-                'span',
-                { id: 'gitber2' },
-                'i'
-              ),
-              _react2.default.createElement(
-                'span',
-                { id: 'gitber3' },
-                't'
-              ),
-              _react2.default.createElement(
-                'span',
-                { id: 'gitber4' },
-                'B'
-              ),
-              _react2.default.createElement(
-                'span',
-                { id: 'gitber5' },
-                'e'
-              ),
-              _react2.default.createElement(
-                'span',
-                { id: 'gitber6' },
-                'r'
-              ),
-              _react2.default.createElement(
-                'span',
-                { id: 'gitber7' },
-                '!'
-              ),
-              _react2.default.createElement(
-                'span',
-                { id: 'gitber8' },
-                _react2.default.createElement('i', { className: 'icon-github' })
-              )
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'row-fluid' },
-            _react2.default.createElement(
-              'div',
-              { className: 'span4' },
-              _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(_user_search2.default, null),
-                _react2.default.createElement(_organization_search2.default, null),
-                _react2.default.createElement(_repository2.default, null),
-                _react2.default.createElement(_user2.default, { user: this.props.user })
-              )
-            )
-          )
-        )
+        _react2.default.createElement(_user_search2.default, { requestUser: this.props.requestUser }),
+        _react2.default.createElement(_organization_search2.default, null),
+        _react2.default.createElement(_repository2.default, null),
+        _react2.default.createElement(_user2.default, { user: this.props.user })
       );
     }
   }]);
@@ -31308,7 +31222,7 @@ var OrganizationSearch = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row-fluid' },
+        null,
         'Org search'
       );
     }
@@ -31350,16 +31264,43 @@ var UserSearch = function (_React$Component) {
   function UserSearch(props) {
     _classCallCheck(this, UserSearch);
 
-    return _possibleConstructorReturn(this, (UserSearch.__proto__ || Object.getPrototypeOf(UserSearch)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (UserSearch.__proto__ || Object.getPrototypeOf(UserSearch)).call(this, props));
+
+    _this.state = {
+      username: ""
+    };
+
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
   _createClass(UserSearch, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ username: e.target.value });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      this.props.requestUser(this.state.username);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row-fluid' },
-        'User search'
+        { className: 'container-item' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement('input', { type: 'text', placeholder: 'Enter username', onChange: this.handleChange }),
+          _react2.default.createElement(
+            'button',
+            null,
+            'Submit'
+          )
+        )
       );
     }
   }]);
@@ -31408,7 +31349,7 @@ var Repository = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row-fluid' },
+        null,
         'represult'
       );
     }
@@ -31507,13 +31448,9 @@ var User = function (_React$Component) {
   _createClass(User, [{
     key: 'render',
     value: function render() {
-      var divStyleUser = {
-        position: 'relative'
-      };
-
       return _react2.default.createElement(
         'div',
-        { className: 'row-fluid', style: divStyleUser },
+        null,
         'USER'
       );
     }

@@ -6,12 +6,8 @@ class User extends React.Component {
   }
 
   render(){
-    let divStyleUser = {
-      position: 'relative'
-    }
-    
     return(
-      <div className='row-fluid' style={divStyleUser}>
+      <div>
         USER
       </div>
     )

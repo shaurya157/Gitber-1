@@ -7,7 +7,7 @@ class Repository extends React.Component{
 
     render(){
       return(
-        <div className='row-fluid'>
+        <div>
           represult
         </div>
       )
