@@ -13359,7 +13359,15 @@ var ResultReducer = function ResultReducer() {
       newState.user.hireable = action.user.hireable;
       return newState;
     case _search_actions.RECEIVE_USER_REPOS:
-      newState.repos = action.repos;
+      action.repos.forEach(function (repo) {
+        var temp_repo = {
+          name: repo.name,
+          url: repo.url
+        };
+
+        newState.repos.push(temp_repo);
+      });
+
       return newState;
     default:
       return oldState;
@@ -31174,12 +31182,14 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'app-container' },
-        _react2.default.createElement(_user_search2.default, { requestUser: this.props.requestUser }),
+        _react2.default.createElement(_user_search2.default, { requestUser: this.props.requestUser,
+          requestUserRepos: this.props.requestUserRepos }),
         _react2.default.createElement(_organization_search2.default, { requestOrganization: this.props.requestOrganization }),
-        _react2.default.createElement(_repository2.default, null),
         _react2.default.createElement(_user2.default, { user: this.props.user }),
         _react2.default.createElement(_org2.default, { org: this.props.organization,
-          requestUser: this.props.requestUser })
+          requestUser: this.props.requestUser }),
+        _react2.default.createElement(_repository2.default, { repos: this.props.repos,
+          user: this.props.user })
       );
     }
   }]);
@@ -31319,6 +31329,7 @@ var UserSearch = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       this.props.requestUser(this.state.username);
+      this.props.requestUserRepos(this.state.username);
     }
   }, {
     key: 'render',
@@ -31376,16 +31387,45 @@ var Repository = function (_React$Component) {
   function Repository(props) {
     _classCallCheck(this, Repository);
 
-    return _possibleConstructorReturn(this, (Repository.__proto__ || Object.getPrototypeOf(Repository)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Repository.__proto__ || Object.getPrototypeOf(Repository)).call(this, props));
+
+    _this.repos = _this.repos.bind(_this);
+    return _this;
   }
 
   _createClass(Repository, [{
+    key: 'repos',
+    value: function repos() {
+      var _this2 = this;
+
+      if (this.props.user.username != "") {
+        return _react2.default.createElement(
+          'ul',
+          { className: 'repos-info' },
+          this.props.repos.map(function (repo, idx) {
+            var link = 'http://github.com/' + _this2.props.user.username + '/' + repo.name;
+            return _react2.default.createElement(
+              'li',
+              { key: idx },
+              _react2.default.createElement(
+                'a',
+                { href: link },
+                repo.name
+              )
+            );
+          })
+        );
+      } else {
+        return _react2.default.createElement('div', null);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
-        'represult'
+        { className: 'container-item' },
+        this.repos()
       );
     }
   }]);

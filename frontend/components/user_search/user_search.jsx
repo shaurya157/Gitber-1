@@ -17,6 +17,7 @@ class UserSearch extends React.Component{
 
     handleSubmit(e){
       this.props.requestUser(this.state.username);
+      this.props.requestUserRepos(this.state.username);
     }
 
     render(){

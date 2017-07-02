@@ -13,12 +13,14 @@ class App extends React.Component {
   render(){
     return(
       <div className = 'app-container'>
-                <UserSearch requestUser={this.props.requestUser}/>
+                <UserSearch requestUser={this.props.requestUser}
+                            requestUserRepos={this.props.requestUserRepos}/>
                 <OrganizationSearch requestOrganization={this.props.requestOrganization}/>
-                <Repository />
                 <User user={this.props.user} />
                 <Organization org={this.props.organization}
                               requestUser={this.props.requestUser}/>
+                <Repository repos={this.props.repos}
+                            user={this.props.user}/>
       </div>
     )
   }

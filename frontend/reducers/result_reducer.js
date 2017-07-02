@@ -42,8 +42,16 @@ const ResultReducer = (oldState = _defaultState, action) => {
       newState.user.hireable = action.user.hireable
       return newState;
     case RECEIVE_USER_REPOS:
-      newState.repos = action.repos
-      return newState
+      action.repos.forEach((repo) => {
+        let temp_repo = {
+          name: repo.name,
+          url: repo.url
+        }
+
+        newState.repos.push(temp_repo);
+      })
+
+      return newState;
     default:
       return oldState;
   }
