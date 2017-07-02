@@ -3,7 +3,8 @@ import merge from 'lodash/merge'
 
 const _defaultState = {
   user: {},
-  organization: []
+  organization: {},
+  repos: []
 };
 
 const ResultReducer = (oldState = _defaultState, action) => {

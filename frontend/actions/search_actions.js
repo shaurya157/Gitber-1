@@ -2,6 +2,10 @@ export const REQUEST_USER = "REQUEST_USER";
 export const RECEIVE_USER = "RECEIVE_USER";
 export const REQUEST_ORGANIZATION = "REQUEST_ORGANIZATION";
 export const RECEIVE_ORGANIZATION = "RECEIVE_ORGANIZATION";
+export const REQUEST_REPO = "REQUEST_REPO";
+export const RECEIVE_REPO = "RECEIVE_REPO";
+export const RECEIVE_USER_REPO = "RECEIVE_USER_REPO";
+export const REQUEST_USER_REPOS = "REQUEST_USER_REPOS";
 
 export const requestUser = (user) => ({
   type: REQUEST_USER,
@@ -22,3 +26,25 @@ export const receiveOrganization = (organization) => ({
   type: RECEIVE_ORGANIZATION,
   organization
 });
+
+export const requestRepo = (user, repo) => ({
+  type: REQUEST_REPOS,
+  user,
+  repo
+})
+
+export const receiveRepo = (repos) => ({
+  type: RECEIVE_REPOS,
+  repos
+})
+
+export const requestUserRepos = (user) => ({
+  type: RECEIVE_REPOS,
+  user
+})
+
+export const receiveUserRepos = (user, repos) => ({
+  type: RECEIVE_REPOS,
+  user,
+  repos
+})
