@@ -13220,10 +13220,9 @@ var requestUserRepos = exports.requestUserRepos = function requestUserRepos(user
   };
 };
 
-var receiveUserRepos = exports.receiveUserRepos = function receiveUserRepos(user, repos) {
+var receiveUserRepos = exports.receiveUserRepos = function receiveUserRepos(repos) {
   return {
     type: RECEIVE_USER_REPOS,
-    user: user,
     repos: repos
   };
 };
@@ -13358,6 +13357,9 @@ var ResultReducer = function ResultReducer() {
       newState.user.url = action.user.url;
       newState.user.created_at = action.user.created_at;
       newState.user.hireable = action.user.hireable;
+      return newState;
+    case _search_actions.RECEIVE_USER_REPOS:
+      newState.repos = action.repos;
       return newState;
     default:
       return oldState;
@@ -31353,20 +31355,7 @@ var SearchMiddleware = function SearchMiddleware(_ref) {
       var receiveOrgSuccess = function receiveOrgSuccess(data) {
         return dispatch((0, _search_actions.receiveOrganization)(data));
       };
-      var receiveUserReposSuccess = function receiveUserReposSuccess(data) {
-        var repos = [];
-        data.forEach(function (repo) {
-          // temp_repo = {}
-          debugger;
-          (0, _github_api_util.getRepoInfo)(action.user, repo.name, function (info) {
-            repos.push(info);
-          });
-        });
-
-        console.log(repos);
-        // dispatch(receiveUserRepos(repos));
-      };
-
+      var receiveUserReposSuccess = data = dispatch((0, _search_actions.receiveUserRepos)(data));
       var error = function error(data) {
         return console.log(data);
       };

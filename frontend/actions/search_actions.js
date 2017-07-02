@@ -43,8 +43,7 @@ export const requestUserRepos = (user) => ({
   user
 })
 
-export const receiveUserRepos = (user, repos) => ({
+export const receiveUserRepos = (repos) => ({
   type: RECEIVE_USER_REPOS,
-  user,
   repos
 })

@@ -1,4 +1,6 @@
-import { RECEIVE_ORGANIZATION, RECEIVE_USER } from '../actions/search_actions';
+import { RECEIVE_ORGANIZATION,
+         RECEIVE_USER,
+         RECEIVE_USER_REPOS} from '../actions/search_actions';
 import merge from 'lodash/merge'
 
 const _defaultState = {
@@ -39,6 +41,9 @@ const ResultReducer = (oldState = _defaultState, action) => {
       newState.user.created_at = action.user.created_at
       newState.user.hireable = action.user.hireable
       return newState;
+    case RECEIVE_USER_REPOS:
+      newState.repos = action.repos
+      return newState
     default:
       return oldState;
   }

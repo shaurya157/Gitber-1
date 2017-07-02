@@ -22,20 +22,7 @@ import {
 const SearchMiddleware = ({dispatch}) => next => action => {
   const receiveUserSuccess = (data) => dispatch(receiveUser(data));
   const receiveOrgSuccess = (data) => dispatch(receiveOrganization(data));
-  const receiveUserReposSuccess = (data) => {
-    let repos = []
-    data.forEach((repo) => {
-      // temp_repo = {}
-      debugger
-      getRepoInfo(action.user, repo.name, (info) => {
-        repos.push(info);
-      })
-    })
-
-    console.log(repos);
-    // dispatch(receiveUserRepos(repos));
-  };
-
+  const receiveUserReposSuccess = (data) = dispatch(receiveUserRepos(data));
   const error = (data) => console.log(data);
 
   switch (action.type) {
