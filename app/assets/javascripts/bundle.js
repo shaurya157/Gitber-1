@@ -13096,7 +13096,52 @@ var configureStore = function configureStore() {
 exports.default = configureStore;
 
 /***/ }),
-/* 139 */,
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var searchUser = exports.searchUser = function searchUser(user, success, error) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.github.com/users/" + user,
+    success: success,
+    error: error
+  });
+};
+
+var getUserRepos = exports.getUserRepos = function getUserRepos(user, success, error) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.github.com/users/" + user + "/repos",
+    success: success,
+    error: error
+  });
+};
+
+var getRepoInfo = exports.getRepoInfo = function getRepoInfo(user, repo, success, error) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.github.com/repos/" + user + "/" + repo + "/readme",
+    success: success,
+    error: error
+  });
+};
+
+var searchOrganization = exports.searchOrganization = function searchOrganization(organization, success, error) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.github.com/orgs/" + organization + "/members",
+    success: success,
+    error: error
+  });
+};
+
+/***/ }),
 /* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13122,7 +13167,7 @@ var REQUEST_ORGANIZATION = exports.REQUEST_ORGANIZATION = "REQUEST_ORGANIZATION"
 var RECEIVE_ORGANIZATION = exports.RECEIVE_ORGANIZATION = "RECEIVE_ORGANIZATION";
 var REQUEST_REPO = exports.REQUEST_REPO = "REQUEST_REPO";
 var RECEIVE_REPO = exports.RECEIVE_REPO = "RECEIVE_REPO";
-var RECEIVE_USER_REPO = exports.RECEIVE_USER_REPO = "RECEIVE_USER_REPO";
+var RECEIVE_USER_REPOS = exports.RECEIVE_USER_REPOS = "RECEIVE_USER_REPOS";
 var REQUEST_USER_REPOS = exports.REQUEST_USER_REPOS = "REQUEST_USER_REPOS";
 
 var requestUser = exports.requestUser = function requestUser(user) {
@@ -13155,7 +13200,7 @@ var receiveOrganization = exports.receiveOrganization = function receiveOrganiza
 
 var requestRepo = exports.requestRepo = function requestRepo(user, repo) {
   return {
-    type: REQUEST_REPOS,
+    type: REQUEST_REPO,
     user: user,
     repo: repo
   };
@@ -13163,21 +13208,21 @@ var requestRepo = exports.requestRepo = function requestRepo(user, repo) {
 
 var receiveRepo = exports.receiveRepo = function receiveRepo(repos) {
   return {
-    type: RECEIVE_REPOS,
+    type: RECEIVE_REPO,
     repos: repos
   };
 };
 
 var requestUserRepos = exports.requestUserRepos = function requestUserRepos(user) {
   return {
-    type: RECEIVE_REPOS,
+    type: REQUEST_USER_REPOS,
     user: user
   };
 };
 
 var receiveUserRepos = exports.receiveUserRepos = function receiveUserRepos(user, repos) {
   return {
-    type: RECEIVE_REPOS,
+    type: RECEIVE_USER_REPOS,
     user: user,
     repos: repos
   };
@@ -13206,9 +13251,9 @@ var _root = __webpack_require__(137);
 
 var _root2 = _interopRequireDefault(_root);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _search_actions = __webpack_require__(141);
 
-// import {searchUser, getUserRepos, getRepoInfo} from './util/github_api_util';
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener('DOMContentLoaded', function () {
   var rootEl = document.getElementById('root');
@@ -13220,7 +13265,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // debugging purposes
-  // window.store = store;
+  window.store = store;
+  window.requestUserRepos = _search_actions.requestUserRepos;
   // window.success = (data) => console.log(data);
   // window.error = data => console.log(data);
   // window.getUserRepos = getUserRepos;
@@ -13273,8 +13319,15 @@ var _merge2 = _interopRequireDefault(_merge);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _defaultState = {
-  user: {},
-  organization: {},
+  user: {
+    name: "",
+    username: "",
+    avatar_url: "",
+    url: "",
+    created_at: "",
+    hireable: false
+  },
+  organization: [],
   repos: []
 };
 
@@ -13287,10 +13340,25 @@ var ResultReducer = function ResultReducer() {
 
   switch (action.type) {
     case _search_actions.RECEIVE_ORGANIZATION:
-      newState.organization = action.organization;
+      action.organization.forEach(function (member) {
+        var org_member = {
+          username: member.login,
+          url: member.url
+        };
+
+        newState.organization.push(org_member);
+      });
+
       return newState;
     case _search_actions.RECEIVE_USER:
-      newState.user = action.user;
+      newState.user.name = action.user.name;
+      newState.user.username = action.user.login;
+      newState.user.avatar_url = action.user.avatar_url;
+      newState.user.followers = action.user.followers;
+      newState.user.url = action.user.url;
+      newState.user.created_at = action.user.created_at;
+      newState.user.hireable = action.user.hireable;
+      return newState;
     default:
       return oldState;
   }
@@ -31271,10 +31339,52 @@ Object.defineProperty(exports, "__esModule", {
 
 var _search_actions = __webpack_require__(141);
 
+var _github_api_util = __webpack_require__(139);
+
+// Very clustered code. Would not do this IRL but for time purposes, need to
+
 var SearchMiddleware = function SearchMiddleware(_ref) {
   var dispatch = _ref.dispatch;
   return function (next) {
-    return action({});
+    return function (action) {
+      var receiveUserSuccess = function receiveUserSuccess(data) {
+        return dispatch((0, _search_actions.receiveUser)(data));
+      };
+      var receiveOrgSuccess = function receiveOrgSuccess(data) {
+        return dispatch((0, _search_actions.receiveOrganization)(data));
+      };
+      var receiveUserReposSuccess = function receiveUserReposSuccess(data) {
+        var repos = [];
+        data.forEach(function (repo) {
+          // temp_repo = {}
+          debugger;
+          (0, _github_api_util.getRepoInfo)(action.user, repo.name, function (info) {
+            repos.push(info);
+          });
+        });
+
+        console.log(repos);
+        // dispatch(receiveUserRepos(repos));
+      };
+
+      var error = function error(data) {
+        return console.log(data);
+      };
+
+      switch (action.type) {
+        case _search_actions.REQUEST_USER:
+          (0, _github_api_util.searchUser)(action.user, receiveUserSuccess, error);
+          return next(action);
+        case _search_actions.REQUEST_ORGANIZATION:
+          (0, _github_api_util.searchOrganization)(action.organization, receiveOrgSuccess, error);
+          return next(action);
+        case _search_actions.REQUEST_USER_REPOS:
+          (0, _github_api_util.getUserRepos)(action.user, receiveUserReposSuccess, error);
+          return next(action);
+        default:
+          return next(action);
+      }
+    };
   };
 };
 

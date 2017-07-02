@@ -2,9 +2,9 @@ import {connect} from 'react-redux';
 import App from './app'
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  organization: state.organization,
-  repos: state.repos
+  user: state.searchResult.user,
+  organization: state.searchResult.organization,
+  repos: state.searchResult.repos
 });
 
 const mapDispatchToProps = (dispatch) => ({

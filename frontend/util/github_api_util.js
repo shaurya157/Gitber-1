@@ -28,7 +28,7 @@ export const getRepoInfo = (user, repo, success, error) => {
 export const searchOrganization = (organization, success, error) => {
   $.ajax({
     method: "GET",
-    url: `https://api.github.com/users/${organization}`,
+    url: `https://api.github.com/orgs/${organization}/members`,
     success,
     error
   });
